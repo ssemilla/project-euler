@@ -1,7 +1,7 @@
 
 import math
 
-def sieve(limit):
+def sieve_arr(limit):
     prime = [True]*limit
     prime[0] = prime[1] = False
     i = 2
@@ -12,6 +12,10 @@ def sieve(limit):
                 prime[j] = False
                 j = j + i
         i = i + 1
+    return prime
+
+def sieve(limit):
+    prime = sieve_arr(limit)
     return lambda x: prime[x]
 
 def sum_divisors(a):

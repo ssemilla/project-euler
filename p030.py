@@ -12,5 +12,6 @@ for n in range(2, max):
     if sum_e5(n) == n:
         total = total + n
 
-print total        
+print total
+
 
