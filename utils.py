@@ -14,10 +14,12 @@ def sieve_arr(limit):
         i = i + 1
     return prime
 
+    
 def sieve(limit):
     prime = sieve_arr(limit)
     return lambda x: prime[x]
 
+    
 def sum_divisors(a):
     sqrt_a = int(math.sqrt(a))
     sum = 1
@@ -28,3 +30,52 @@ def sum_divisors(a):
         divisor = divisor + 1
     if sqrt_a**2 == a: sum = sum - sqrt_a
     return sum
+
+def modulo(n, e, p):
+    res = 1
+    base = n
+    while e:
+        if e % 2:
+            res = (res * base) % p
+        base = (base * base) % p
+        e /= 2
+    return res % p
+
+mr_enough = [2,3,5,7,11,13,17]
+    
+def miller_rabin(n, iters=16):
+
+    if n < 2:
+        return False
+    if n == 2:
+        return True
+    if n != 2 and n % 2 == 0:
+        return False
+
+    s = n - 1
+    r = 0
+    while s % 2 == 0:
+        s /= 2
+        r += 1
+
+    def pass_test(a):
+        if modulo(a, s, n) == 1:
+            return True
+        j = 0
+        while j < r:
+            if modulo(a, (2**j)*s, n) == n-1:
+                return True
+            j += 1
+        return False
+
+    i = 0
+    while i < len(mr_enough):
+        a = mr_enough[i]
+        if a < n:
+            if not pass_test(a):
+                return False
+        else:
+            break
+        i += 1
+        
+    return True
